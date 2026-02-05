@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Smart Event Dashboard </title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="dashboard">
+  <section id="my-events">
+    <h2>My Events</h2>
+    <button id="clear-events">Clear All Events</button>
+    <button id="sample-events">Add Sample Events</button>
+    <div id="event-list">No events yet. Add your first event!</div>
+  </section>
+
+  <section id="event-form">
+    <h2>Add A New Event</h2>
+    <label>Event Title</label>
+    <input type="text" id="title" placeholder="Event Title">
+
+    <label>Event Date</label>
+    <input type="date" id="date">
+
+    <label>Category</label>
+    <select id="category">
+      <option>Conference</option>
+      <option>Workshop</option>
+      <option>Seminar</option>
+    </select>
+
+    <label>Description</label>
+    <textarea id="description" placeholder="Description"></textarea>
+
+    <button id="add-event">Add Event</button>
+  </section>
+
+  <section id="demo">
+    <h2>DOM Manipulation Demo</h2>
+    <p id="key-demo">You Pressed Shift</p>
+  </section>
+</div>
+        <!-- <H1 class="H1">Smart Event Dashboard </H1>
+        <div class="container">
+        <section id="my-event">
+            <H2 class="H2">My Events</H2>
+            <div>
+                <button id="clear-events">Clear All Events</button>
+                <button id="sample-events">Add Sample Events</button>
+                <div id="event-list">No events yet. Add your first event!</div>
+
+
+            </div>
+        </section>
+
+
+        <section id="event-form">
+            <h2 class="H2">Add A New Event</h2>
+            
+            <label name="Event Title" id="Event">Event Title</label>
+            <input type="text" id="Event Title">
+            
+            <label name="Event Date" id="Event Date">Event Date</label>
+            <input type="date" id="Event Date">
+
+            <label>Category</label>
+            <select id="category">
+                <option>Conference</option>
+                <option>Workshop</option>
+                <option>Seminar</option>
+            </select>
+
+            <label name="Description" id="Description">Description</label>
+            <textarea id="Description" placeholder="Description"></textarea>
+
+            <button id="add-event">Add Event</button> -->
+
+        <!-- </section>
+
+        <section id="dom">
+            <h2 class="H2"> DOM Manipulation Demo</h2>
+            <p>Press a key...</p>
+        </section>
+        </div> -->
+        
+    <script>
+        // References to DOM elements
+const eventList = document.getElementById("event-list");
+const addBtn = document.getElementById("add-event");
+const clearBtn = document.getElementById("clear-events");
+const sampleBtn = document.getElementById("sample-events");
+const keyDemo = document.getElementById("key-demo");
+
+// Function to create an event card
+function createEventCard(title, date, category, description) {
+  const card = document.createElement("div");
+  card.className = "event-card";   // styled by CSS
+  card.innerHTML = `
+    <h3>${title}</h3>
+    <p>${date} | ${category}</p>
+    <p>${description}</p>
+  `;
+  return card;
+}
+
+// Add Event
+addBtn.addEventListener("click", () => {
+  const title = document.getElementById("title").value.trim();
+  const date = document.getElementById("date").value;
+  const category = document.getElementById("category").value;
+  const description = document.getElementById("description").value.trim();
+
+  if (title && date) {
+    const card = createEventCard(title, date, category, description);
+    if (eventList.textContent.includes("No events yet")) {
+      eventList.textContent = ""; // clear placeholder
+    }
+    eventList.appendChild(card);
+
+    // Reset form fields
+    document.getElementById("title").value = "";
+    document.getElementById("date").value = "";
+    document.getElementById("description").value = "";
+  } else {
+    alert("Please enter at least a title and date!");
+  }
+});
+
+// Clear All Events
+clearBtn.addEventListener("click", () => {
+  eventList.innerHTML = "No events yet. Add your first event!";
+});
+
+// Add Sample Events
+sampleBtn.addEventListener("click", () => {
+  eventList.innerHTML = ""; // clear placeholder
+  const sampleEvents = [
+    {
+      title: "Web Development Conference",
+      date: "2023-03-13",
+      category: "Conference",
+      description: "Annual conference on modern web technologies."
+    },
+    {
+      title: "JavaScript Workshop",
+      date: "2023-03-20",
+      category: "Workshop",
+      description: "Hands-on JavaScript learning session."
+    }
+  ];
+  sampleEvents.forEach(ev => {
+    const card = createEventCard(ev.title, ev.date, ev.category, ev.description);
+    eventList.appendChild(card);
+  });
+});
+
+// Event Delegation: click on event titles
+eventList.addEventListener("click", (e) => {
+  if (e.target.tagName === "H3") {
+    alert("You clicked on event: " + e.target.innerText);
+  }
+});
+
+// DOM Manipulation Demo: key press
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Shift") {
+    keyDemo.textContent = "You Pressed Shift";
+    keyDemo.style.color = "red";
+  } else {
+    keyDemo.textContent = `You pressed: ${e.key}`;
+    keyDemo.style.color = "black";
+  }
+});
+        
+
+    </script>
+    </body>
+</html>
